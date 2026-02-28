@@ -1,0 +1,34 @@
+name: Node.js Bot CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. نسخ الكود من الريبو
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. إعداد Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # 3. تثبيت المكتبات
+    - name: Install dependencies
+      run: npm install
+
+    # 4. اختبار الكود (لو عندك tests)
+    - name: Run tests
+      run: npm test
+
+    # 5. تشغيل البوت (اختياري - عادةً للتأكد إنه بيشتغل)
+    - name: Start bot
+      run: node index.js
