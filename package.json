@@ -1,7 +1,7 @@
 {
   "name": "minecraft-bot",
   "version": "1.0.0",
-  "description": "Mineflayer AFK bot for Drainland.aternos.me",
+  "description": "Mineflayer bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
