@@ -5,7 +5,7 @@ function startBot() {
     host: 'Drainland.aternos.me',
     username: 'shay', // اسم مختلف عن حسابك الأساسي
     auth: 'offline',          // cracked
-    version:  '1.20.4', 
+    version:  '1.20.4'
   });
 
   bot.on('spawn', () => {
