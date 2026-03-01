@@ -3,7 +3,6 @@ const mineflayer = require('mineflayer');
 function startBot() {
   const bot = mineflayer.createBot({
     host: 'yyyycraft.falixsrv.me',
-    port: 39687,
     username: 'ShadowAFKBot', // اسم مختلف عن حسابك الأساسي
     auth: 'offline',          // للسيرفرات الـ cracked
     version: '1.20.1'         // حدّد نسخة السيرفر لو محتاج
