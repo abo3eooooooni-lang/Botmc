@@ -2,7 +2,7 @@ const mineflayer = require('mineflayer');
 
 function startBot() {
   const bot = mineflayer.createBot({
-    host: 'yyyycraft.falixsrv.me',
+    host: 'Drainland.aternos.me',
     username: 'shay', // اسم مختلف عن حسابك الأساسي
     auth: 'offline',          // للسيرفرات الـ cracked
     version: '1.21.11'         // حدّد نسخة السيرفر لو محتاج
