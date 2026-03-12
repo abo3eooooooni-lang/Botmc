@@ -5,7 +5,7 @@ function startBot() {
     host: 'yyyycraft.falixsrv.me',
     username: 'shay', // اسم مختلف عن حسابك الأساسي
     auth: 'offline',          // cracked
-    version: '1.21.11'
+    version: '1.20.1'
   });
 
   bot.on('spawn', () => {
