@@ -2,19 +2,15 @@ const mineflayer = require('mineflayer');
 
 function createBot(options) {
   const bot = mineflayer.createBot(options);
-  let firstJoin = true;
+  let registered = false;
 
   bot.on('spawn', () => {
     console.log(`البوت ${options.username} اتصل`);
 
-    if (firstJoin) {
+    if (!registered) {
       setTimeout(() => {
         bot.chat('/register 123yyyuuu 123yyyuuu');
-        firstJoin = false;
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        bot.chat('/login 123yyyuuu');
+        registered = true;
       }, 2000);
     }
 
@@ -47,10 +43,10 @@ function createBot(options) {
 let count = 1;
 setInterval(() => {
   createBot({
-    host: 'sixaa.falixsrv.me',   // السيرفر الجديد
+    host: 'play.ashpvp.xyz',
     username: `laboo${count}`,
     auth: 'offline',
-    version: false               // يتعرف تلقائيًا على نسخة السيرفر
+    version: '1.20.1'
   });
   console.log(`تم إنشاء البوت رقم ${count}`);
   count++;
