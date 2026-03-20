@@ -2,15 +2,19 @@ const mineflayer = require('mineflayer');
 
 function createBot(options) {
   const bot = mineflayer.createBot(options);
-  let registered = false;
+  let firstJoin = true;
 
   bot.on('spawn', () => {
     console.log(`البوت ${options.username} اتصل`);
 
-    if (!registered) {
+    if (firstJoin) {
       setTimeout(() => {
-        bot.chat('.');
-        registered = true;
+        bot.chat('/register 123yyyuuu 123yyyuuu');
+        firstJoin = false;
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        bot.chat('/login 123yyyuuu');
       }, 2000);
     }
 
@@ -43,10 +47,10 @@ function createBot(options) {
 let count = 1;
 setInterval(() => {
   createBot({
-    host: 'sixaa.falixsrv.me',
+    host: 'sixaa.falixsrv.me',   // السيرفر الجديد
     username: `laboo${count}`,
     auth: 'offline',
-    version: '1.20.1'
+    version: false               // يتعرف تلقائيًا على نسخة السيرفر
   });
   console.log(`تم إنشاء البوت رقم ${count}`);
   count++;
