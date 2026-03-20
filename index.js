@@ -43,7 +43,7 @@ function createBot(options) {
 let count = 1;
 setInterval(() => {
   createBot({
-    host: 'play.ashpvp.xyz',
+    host: 'mc.mineberry.org',
     username: `labooo${count}`,
     auth: 'offline',
     version: '1.20.1'
