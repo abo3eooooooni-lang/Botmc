@@ -3,7 +3,7 @@ const mineflayer = require('mineflayer');
 function startBot() {
   const bot = mineflayer.createBot({
     host: 'mc.mineberry.org',
-    username: 'wwe', // اسم مختلف عن حسابك الأساسي
+    username: 'wwwe', // اسم مختلف عن حسابك الأساسي
     auth: 'offline',          // للسيرفرات الـ cracked
     version: '1.20.1'         // أو false لو عايز يتعرف تلقائيًا
   });
@@ -12,7 +12,7 @@ function startBot() {
     console.log('البوت متصل (AFK)');
 
     // تسجيل الحساب أوّل ما يدخل
-    bot.chat('/login 123yyyuuu');
+    bot.chat('/reg 123yyyuuu');
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
