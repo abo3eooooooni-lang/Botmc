@@ -3,19 +3,39 @@ const mineflayer = require('mineflayer');
 function startBot() {
   const bot = mineflayer.createBot({
     host: 'play.ashpvp.xyz',
-    username: 'HHHHHHH_3mk', // اسم مختلف عن حسابك الأساسي
-    auth: 'offline',          // للسيرفرات الـ cracked
-    version: '1.20.1'         // أو false لو عايز يتعرف تلقائيًا
+    username: 'HHHHHHH_3mk',
+    auth: 'offline',
+    version: '1.20.1'
   });
+
+  let loggedIn = false;
 
   bot.on('spawn', () => {
     console.log('البوت متصل (AFK)');
 
-    // تسجيل الحساب أوّل ما يدخل
-    bot.chat('/login 123yyyuuu');
+    // تسجيل مرة واحدة فقط
+    if (!loggedIn) {
+      setTimeout(() => {
+        bot.chat('/login 123yyyuuu');
+        loggedIn = true;
+      }, 2000);
+    }
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
+
+    // تفعيل auto-jump
+    bot.setControlState('jump', true);
+  });
+
+  // لو فيه بلوك قدام، البوت ينط تلقائي
+  bot.on('physicsTick', () => {
+    const blockInFront = bot.blockAt(bot.entity.position.offset(0, 0, 1));
+    if (blockInFront && !blockInFront.transparent) {
+      bot.setControlState('jump', true);
+    } else {
+      bot.setControlState('jump', false);
+    }
   });
 
   bot.on('message', (message) => {
