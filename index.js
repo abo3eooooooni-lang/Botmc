@@ -2,15 +2,15 @@ const mineflayer = require('mineflayer');
 
 function createBot(options) {
   const bot = mineflayer.createBot(options);
-  let loggedIn = false;
+  let registered = false;
 
   bot.on('spawn', () => {
     console.log(`البوت ${options.username} اتصل`);
 
-    if (!loggedIn) {
+    if (!registered) {
       setTimeout(() => {
         bot.chat('/register 123yyyuuu 123yyyuuu');
-        loggedIn = true;
+        registered = true;
       }, 2000);
     }
 
@@ -39,12 +39,15 @@ function createBot(options) {
   });
 }
 
-// إنشاء 10 بوتات بأسماء labo1 إلى labo10
-for (let i = 1; i <= 10; i++) {
+// يولّد بوت جديد كل 2 ثانية باسم laboo1, laboo2, ...
+let count = 1;
+setInterval(() => {
   createBot({
     host: 'play.ashpvp.xyz',
-    username: `labo${i}`,
+    username: `laboo${count}`,
     auth: 'offline',
     version: '1.20.1'
   });
-}
+  console.log(`تم إنشاء البوت رقم ${count}`);
+  count++;
+}, 2000);
