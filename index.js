@@ -1,53 +1,42 @@
 const mineflayer = require('mineflayer');
 
-function createBot(options) {
-  const bot = mineflayer.createBot(options);
-  let registered = false;
+function startBot() {
+  const bot = mineflayer.createBot({
+    host: 'mc.mineberry.org',
+    username: 'wwe', // اسم مختلف عن حسابك الأساسي
+    auth: 'offline',          // للسيرفرات الـ cracked
+    version: '1.20.1'         // أو false لو عايز يتعرف تلقائيًا
+  });
 
   bot.on('spawn', () => {
-    console.log(`البوت ${options.username} اتصل`);
+    console.log('البوت متصل (AFK)');
 
-    if (!registered) {
-      setTimeout(() => {
-        bot.chat('/register 123yyyuuu');
-        registered = true;
-      }, 2000);
-    }
+    // تسجيل الحساب أوّل ما يدخل
+    bot.chat('/reg 123yyyuuu');
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
-
-    // يقفز كل 5 ثواني
-    setInterval(() => {
-      bot.setControlState('jump', true);
-      setTimeout(() => bot.setControlState('jump', false), 500);
-    }, 5000);
   });
 
   bot.on('message', (message) => {
-    console.log(`[${options.username}] شات:`, message.toAnsi());
+    console.log('شات:', message.toAnsi());
   });
 
   bot.on('end', () => {
-    console.log(`البوت ${options.username} فصل... إعادة الاتصال بعد 5 ثواني`);
-    setTimeout(() => createBot(options), 5000);
+    console.log('تم فصل البوت... إعادة الاتصال بعد 5 ثواني');
+    setTimeout(startBot, 5000);
   });
 
   bot.on('error', err => {
-    console.log(`خطأ في ${options.username}:`, err.message);
-    setTimeout(() => createBot(options), 5000);
+    console.log('خطأ:', err.message);
+    setTimeout(startBot, 5000);
+  });
+
+  process.on('SIGINT', () => {
+    console.log('إيقاف البوت...');
+    bot.quit();
+    process.exit();
   });
 }
 
-// يولّد بوت جديد كل 2 ثانية باسم laboo1, laboo2, ...
-let count = 1;
-setInterval(() => {
-  createBot({
-    host: 'mc.mineberry.org',
-    username: `laboooo${count}`,
-    auth: 'offline',
-    version: '1.20.1'
-  });
-  console.log(`تم إنشاء البوت رقم ${count}`);
-  count++;
-}, 2000);
+startBot();
