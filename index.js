@@ -1,42 +1,53 @@
 const mineflayer = require('mineflayer');
 
-function startBot() {
-  const bot = mineflayer.createBot({
-    host: 'mc.mineberry.org',
-    username: 'wwwe', // اسم مختلف عن حسابك الأساسي
-    auth: 'offline',          // للسيرفرات الـ cracked
-    version: '1.20.1'         // أو false لو عايز يتعرف تلقائيًا
-  });
+function createBot(options) {
+  const bot = mineflayer.createBot(options);
+  let registered = false;
 
   bot.on('spawn', () => {
-    console.log('البوت متصل (AFK)');
+    console.log(`البوت ${options.username} اتصل`);
 
-    // تسجيل الحساب أوّل ما يدخل
-    bot.chat('/login 123yyyuuu');
+    if (!registered) {
+      setTimeout(() => {
+        bot.chat('.');
+        registered = true;
+      }, 2000);
+    }
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
+
+    // يقفز كل 5 ثواني
+    setInterval(() => {
+      bot.setControlState('jump', true);
+      setTimeout(() => bot.setControlState('jump', false), 500);
+    }, 5000);
   });
 
   bot.on('message', (message) => {
-    console.log('شات:', message.toAnsi());
+    console.log(`[${options.username}] شات:`, message.toAnsi());
   });
 
   bot.on('end', () => {
-    console.log('تم فصل البوت... إعادة الاتصال بعد 5 ثواني');
-    setTimeout(startBot, 5000);
+    console.log(`البوت ${options.username} فصل... إعادة الاتصال بعد 5 ثواني`);
+    setTimeout(() => createBot(options), 5000);
   });
 
   bot.on('error', err => {
-    console.log('خطأ:', err.message);
-    setTimeout(startBot, 5000);
-  });
-
-  process.on('SIGINT', () => {
-    console.log('إيقاف البوت...');
-    bot.quit();
-    process.exit();
+    console.log(`خطأ في ${options.username}:`, err.message);
+    setTimeout(() => createBot(options), 5000);
   });
 }
 
-startBot();
+// يولّد بوت جديد كل 2 ثانية باسم laboo1, laboo2, ...
+let count = 1;
+setInterval(() => {
+  createBot({
+    host: 'sixaa.falixsrv.me',
+    username: `laboo${count}`,
+    auth: 'offline',
+    version: '1.20.1'
+  });
+  console.log(`تم إنشاء البوت رقم ${count}`);
+  count++;
+}, 2000);
