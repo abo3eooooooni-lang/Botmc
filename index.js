@@ -12,7 +12,7 @@ function startBot() {
     console.log('البوت متصل (AFK)');
 
     // تسجيل الحساب أوّل ما يدخل
-    bot.chat('/reg 123yyyuuu');
+    bot.chat('/login 123yyyuuu');
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
