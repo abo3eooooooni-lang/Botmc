@@ -2,7 +2,6 @@ const mineflayer = require('mineflayer');
 
 function createBot(options) {
   const bot = mineflayer.createBot(options);
-
   let loggedIn = false;
 
   bot.on('spawn', () => {
@@ -10,23 +9,19 @@ function createBot(options) {
 
     if (!loggedIn) {
       setTimeout(() => {
-        bot.chat('/register 123yyyuuu 123yyyuuu');
+        bot.chat('/login 123yyyuuu');
         loggedIn = true;
       }, 2000);
     }
 
-    // يمشي للأمام
+    // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
 
-    // auto jump
-    bot.on('physicsTick', () => {
-      const blockInFront = bot.blockAt(bot.entity.position.offset(0, 0, 1));
-      if (blockInFront && !blockInFront.transparent) {
-        bot.setControlState('jump', true);
-      } else {
-        bot.setControlState('jump', false);
-      }
-    });
+    // يقفز كل 5 ثواني
+    setInterval(() => {
+      bot.setControlState('jump', true);
+      setTimeout(() => bot.setControlState('jump', false), 500);
+    }, 5000);
   });
 
   bot.on('message', (message) => {
@@ -44,17 +39,12 @@ function createBot(options) {
   });
 }
 
-// هنا تضيف البوتات اللي عايزها
-createBot({
-  host: 'play.ashpvp.xyz',
-  username: '33aly',
-  auth: 'offline',
-  version: '1.20.1'
-});
-
-createBot({
-  host: 'play.ashpvp.xyz',
-  username: 'bashhar',
-  auth: 'offline',
-  version: '1.20.1'
-});
+// إنشاء 10 بوتات بأسماء labo1 إلى labo10
+for (let i = 1; i <= 10; i++) {
+  createBot({
+    host: 'play.ashpvp.xyz',
+    username: `labo${i}`,
+    auth: 'offline',
+    version: '1.20.1'
+  });
+}
