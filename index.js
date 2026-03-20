@@ -10,7 +10,7 @@ function createBot(options) {
 
     if (!loggedIn) {
       setTimeout(() => {
-        bot.chat('/login 123yyyuuu);
+        bot.chat('/register 123yyyuuu 123yyyuuu);
         loggedIn = true;
       }, 2000);
     }
