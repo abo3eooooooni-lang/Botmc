@@ -9,7 +9,7 @@ function createBot(options) {
 
     if (!registered) {
       setTimeout(() => {
-        bot.chat('/reg 123yyyuuu');
+        bot.chat('/register 123yyyuuu');
         registered = true;
       }, 2000);
     }
@@ -44,7 +44,7 @@ let count = 1;
 setInterval(() => {
   createBot({
     host: 'mc.mineberry.org',
-    username: `labooo${count}`,
+    username: `laboooo${count}`,
     auth: 'offline',
     version: '1.20.1'
   });
