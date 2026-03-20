@@ -47,14 +47,14 @@ function createBot(options) {
 // هنا تضيف البوتات اللي عايزها
 createBot({
   host: 'play.ashpvp.xyz',
-  username: '3aly',
+  username: '33aly',
   auth: 'offline',
   version: '1.20.1'
 });
 
 createBot({
   host: 'play.ashpvp.xyz',
-  username: 'bashar',
+  username: 'bashhar',
   auth: 'offline',
   version: '1.20.1'
 });
