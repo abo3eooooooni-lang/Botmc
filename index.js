@@ -1,9 +1,9 @@
 const mineflayer = require('mineflayer');
 
-function startBot() {
+function createBot(name) {
   const bot = mineflayer.createBot({
     host: 'sixaa.falixsrv.me',   // السيرفر
-    username: 'laboo1',          // اسم البوت
+    username: name,              // اسم البوت
     auth: 'offline',
     version: '1.20.1'            // النسخة المطلوبة
   });
@@ -32,13 +32,16 @@ function startBot() {
 
   bot.on('end', () => {
     console.log(`البوت ${bot.username} فصل... إعادة الاتصال بعد 5 ثواني`);
-    setTimeout(startBot, 5000);
+    setTimeout(() => createBot(name), 5000);
   });
 
   bot.on('error', err => {
     console.log(`خطأ في ${bot.username}:`, err.message);
-    setTimeout(startBot, 5000);
+    setTimeout(() => createBot(name), 5000);
   });
 }
 
-startBot();
+// إنشاء 3 بوتات
+createBot('laboo1');
+createBot('laboo2');
+createBot('laboo3');
