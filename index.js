@@ -9,7 +9,7 @@ function createBot(options) {
 
     if (!registered) {
       setTimeout(() => {
-        bot.chat('/register 123yyyuuu 123yyyuuu');
+        bot.chat('0');
         registered = true;
       }, 2000);
     }
