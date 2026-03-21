@@ -1,18 +1,20 @@
 const mineflayer = require('mineflayer');
 
-function createBot(options) {
-  const bot = mineflayer.createBot(options);
-  let registered = false;
+function startBot() {
+  const bot = mineflayer.createBot({
+    host: 'sixaa.falixsrv.me',   // السيرفر
+    username: 'laboo1',          // اسم البوت
+    auth: 'offline',
+    version: '1.20.1'            // النسخة المطلوبة
+  });
 
   bot.on('spawn', () => {
-    console.log(`البوت ${options.username} اتصل`);
+    console.log(`البوت ${bot.username} اتصل`);
 
-    if (!registered) {
-      setTimeout(() => {
-        bot.chat('0');
-        registered = true;
-      }, 2000);
-    }
+    // يكتب 0 أول ما يدخل
+    setTimeout(() => {
+      bot.chat('0');
+    }, 2000);
 
     // يمشي للأمام باستمرار
     bot.setControlState('forward', true);
@@ -25,29 +27,18 @@ function createBot(options) {
   });
 
   bot.on('message', (message) => {
-    console.log(`[${options.username}] شات:`, message.toAnsi());
+    console.log(`[${bot.username}] شات:`, message.toAnsi());
   });
 
   bot.on('end', () => {
-    console.log(`البوت ${options.username} فصل... إعادة الاتصال بعد 5 ثواني`);
-    setTimeout(() => createBot(options), 5000);
+    console.log(`البوت ${bot.username} فصل... إعادة الاتصال بعد 5 ثواني`);
+    setTimeout(startBot, 5000);
   });
 
   bot.on('error', err => {
-    console.log(`خطأ في ${options.username}:`, err.message);
-    setTimeout(() => createBot(options), 5000);
+    console.log(`خطأ في ${bot.username}:`, err.message);
+    setTimeout(startBot, 5000);
   });
 }
 
-// يولّد بوت جديد كل 2 ثانية باسم laboo1, laboo2, ...
-let count = 1;
-setInterval(() => {
-  createBot({
-    host: 'sixaa.falixsrv.me',
-    username: `laboo${count}`,
-    auth: 'offline',
-    version: '1.20.1'
-  });
-  console.log(`تم إنشاء البوت رقم ${count}`);
-  count++;
-}, 2000);
+startBot();
