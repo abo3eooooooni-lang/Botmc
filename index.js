@@ -9,7 +9,7 @@ function createBot(name) {
   });
 
   bot.on('spawn', () => {
-    console.log(`البوت ${bot.username} اتصل`);
+    console.log(`البوت ${name} اتصل`);
 
     // يكتب 0 أول ما يدخل
     setTimeout(() => {
@@ -27,21 +27,25 @@ function createBot(name) {
   });
 
   bot.on('message', (message) => {
-    console.log(`[${bot.username}] شات:`, message.toAnsi());
+    console.log(`[${name}] شات:`, message.toAnsi());
   });
 
   bot.on('end', () => {
-    console.log(`البوت ${bot.username} فصل... إعادة الاتصال بعد 5 ثواني`);
+    console.log(`البوت ${name} فصل... إعادة الاتصال بعد 5 ثواني`);
     setTimeout(() => createBot(name), 5000);
   });
 
   bot.on('error', err => {
-    console.log(`خطأ في ${bot.username}:`, err.message);
+    console.log(`خطأ في ${name}:`, err.message);
     setTimeout(() => createBot(name), 5000);
   });
 }
 
-// إنشاء 3 بوتات
-createBot('laboo1');
-createBot('laboo2');
-createBot('laboo3');
+// يولّد بوت جديد كل 2 ثانية باسم laboo1, laboo2, laboo3, ...
+let count = 1;
+setInterval(() => {
+  const name = `laboo${count}`;
+  createBot(name);
+  console.log(`تم إنشاء البوت رقم ${count} (${name})`);
+  count++;
+}, 2000);
