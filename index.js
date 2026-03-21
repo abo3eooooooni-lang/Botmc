@@ -41,11 +41,11 @@ function createBot(name) {
   });
 }
 
-// يولّد بوت جديد كل 30 ثانية باسم laboo1, laboo2, laboo3, ...
+// يولّد بوت جديد كل 10 ثواني باسم laboo1, laboo2, laboo3, ...
 let count = 1;
 setInterval(() => {
   const name = `laboo${count}`;
   createBot(name);
   console.log(`تم إنشاء البوت رقم ${count} (${name})`);
   count++;
-}, 30000); // كل 30 ثانية
+}, 10000); // كل 10 ثواني
