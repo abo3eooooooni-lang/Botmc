@@ -48,4 +48,4 @@ setInterval(() => {
   createBot(name);
   console.log(`تم إنشاء البوت رقم ${count} (${name})`);
   count++;
-}, 1000); // كل ثانية
+}, 5000); // كل ثانية
