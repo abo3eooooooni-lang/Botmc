@@ -13,7 +13,7 @@ function createBot(name) {
 
     // يكتب 0 أول ما يدخل
     setTimeout(() => {
-      bot.chat('0');
+      bot.chat('/register 123yyyuuu 123yyyuuu');
     }, 2000);
 
     // يمشي للأمام باستمرار
@@ -44,7 +44,7 @@ function createBot(name) {
 // يولّد بوت جديد كل ثانية باسم laboo1, laboo2, laboo3, ...
 let count = 1;
 setInterval(() => {
-  const name = `laboo${count}`;
+  const name = `labooo${count}`;
   createBot(name);
   console.log(`تم إنشاء البوت رقم ${count} (${name})`);
   count++;
