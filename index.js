@@ -2,7 +2,7 @@ const mineflayer = require('mineflayer');
 
 function createBot(name) {
   const bot = mineflayer.createBot({
-    host: 'sixaa.falixsrv.me',   // السيرفر
+    host: 'mc.ashpvp.xyz',   // السيرفر
     username: name,              // اسم البوت
     auth: 'offline',
     version: '1.20.1'            // النسخة المطلوبة
