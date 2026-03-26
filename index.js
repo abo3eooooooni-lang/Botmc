@@ -1,29 +1,42 @@
 const mineflayer = require('mineflayer');
+const { pathfinder, Movements } = require('mineflayer-pathfinder');
+const { GoalFollow } = require('mineflayer-pathfinder').goals;
+const pvp = require('mineflayer-pvp').plugin;
+
+const protectPlayerName = 'hoagb'; // اللاعب اللي البوتات لازم تحميه
+const password = '1234yyyuuu';     // الباسورد المستخدم للتسجيل والدخول
 
 function createBot(name) {
   const bot = mineflayer.createBot({
-    host: 'mc.ashpvp.xyz',   // السيرفر
-    username: name,              // اسم البوت
+    host: 'mc.ashpvp.xyz',
+    username: name,
     auth: 'offline',
-    version: '1.20.1'            // النسخة المطلوبة
+    version: '1.20.1'
   });
+
+  bot.loadPlugin(pathfinder);
+  bot.loadPlugin(pvp);
 
   bot.on('spawn', () => {
     console.log(`البوت ${name} اتصل`);
 
-    // يكتب 0 أول ما يدخل
+    // تسجيل أول مرة
     setTimeout(() => {
-      bot.chat('/register 123yyyuuu 123yyyuuu');
+      bot.chat(`/register ${password} ${password}`);
     }, 2000);
 
-    // يمشي للأمام باستمرار
-    bot.setControlState('forward', true);
+    // بعد التسجيل، يدخل باستخدام login
+    setTimeout(() => {
+      bot.chat(`/login ${password}`);
+    }, 4000);
 
-    // يقفز كل 5 ثواني
-    setInterval(() => {
-      bot.setControlState('jump', true);
-      setTimeout(() => bot.setControlState('jump', false), 500);
-    }, 5000);
+    // يمشي للأمام 10 ثواني
+    bot.setControlState('forward', true);
+    setTimeout(() => {
+      bot.setControlState('forward', false);
+      console.log(`${name} توقف عن المشي وبدأ القتال`);
+      startCombat(bot);
+    }, 10000);
   });
 
   bot.on('message', (message) => {
@@ -41,11 +54,36 @@ function createBot(name) {
   });
 }
 
-// يولّد بوت جديد كل ثانية باسم laboo1, laboo2, laboo3, ...
+function startCombat(bot) {
+  setInterval(() => {
+    const protectPlayer = bot.players[protectPlayerName]?.entity;
+    if (protectPlayer) {
+      // يتبع اللاعب ويحميه
+      const mcData = require('minecraft-data')(bot.version);
+      const movements = new Movements(bot, mcData);
+      bot.pathfinder.setMovements(movements);
+      bot.pathfinder.setGoal(new GoalFollow(protectPlayer, 2), true);
+    }
+
+    // يهاجم أي لاعب قريب غير اللاعب المحمي
+    for (const username in bot.players) {
+      if (username !== protectPlayerName) {
+        const entity = bot.players[username]?.entity;
+        if (entity) {
+          bot.pvp.attack(entity);
+        }
+      }
+    }
+  }, 3000); // كل 3 ثواني يتأكد
+}
+
+// يولّد بوت جديد كل دقيقة (عدد محدود)
 let count = 1;
 setInterval(() => {
-  const name = `labooo${count}`;
-  createBot(name);
-  console.log(`تم إنشاء البوت رقم ${count} (${name})`);
-  count++;
-}, 5000); // كل ثانية
+  if (count <= 5) { // عدد البوتات الأقصى
+    const name = `labooo${count}`;
+    createBot(name);
+    console.log(`تم إنشاء البوت رقم ${count} (${name})`);
+    count++;
+  }
+}, 60000);
